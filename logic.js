@@ -79,19 +79,46 @@ const test_one = {
 };
 
 const test_two = {
-	
+	expression: '(age >= 18)',
+	save: 'adult',
+	transitions: {
+		isTrue: 15,
+		isFalse: 23,
+		isError: 45
+	},
+	context: {
+		age: 15
+	}
 };
 
 const test_three = {
 	expression: '((age) > 18)',
 	save: 'adult',
 	transitions: {
-		isTrue: 101,
-		isFalse: 102,
-		isError: 103,
+		isTrue: 15,
+		isFalse: 23,
+		isError: 45,
 	},
 	context: {}
 };
 
-logicalChallenge(JSON.stringify(test_three));
+const test_four = {
+	expression: '(age < 18)',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 103
+	},
+	context: {
+		age: 20
+	}
+}
+console.log(`------> Example 1 : ${test_one.expression}`);
 logicalChallenge(JSON.stringify(test_one));
+console.log(`------> Example 2 : ${test_two.expression}`);
+logicalChallenge(JSON.stringify(test_two));
+console.log(`------> Example 3 : ${test_three.expression}`);
+logicalChallenge(JSON.stringify(test_three));
+console.log(`------> Example 4 : ${test_four.expression}`);
+logicalChallenge(JSON.stringify(test_four));

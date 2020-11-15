@@ -23,24 +23,63 @@ const dummyOutput = (prop, value, next) => ({
 	transition: next
 });
 
-try{
-	const input = JSON.parse(args);
-	const inputSchema = transformInput2KeyValue(schema);
-	const inputParsed = transformInput2KeyValue(input);
-	if(dummySchemaValidator(inputParsed, inputSchema)){
-		try{
-			const result = mathjs.evaluate(input.expression.replace('**', '^'));
-			// DEBUG
-			// console.log(mathjs.evaluate(input.expression.replace('**', '^')));
-			console.log(JSON.stringify(dummyOutput(input.save, result.toString(), Number(input.transitions.next)), null, 4));
-			return ;
-		}catch(e){
-			console.log(JSON.stringify(dummyOutput(input.save, 'NaN', Number(input.transitions.error)), null, 4));
-		}
-	}else{
-		console.log('Error invalid schema!');
-	}
-}catch(err){
-	console.log(`Invalid Input JSON! ${err}`);
+if(args.length > 0){
+	arithmeticChallenge(args);
 }
+
+
+function arithmeticChallenge(inputString){
+	try{
+		const input = JSON.parse(inputString);
+		const inputSchema = transformInput2KeyValue(schema);
+		const inputParsed = transformInput2KeyValue(input);
+		if(dummySchemaValidator(inputParsed, inputSchema)){
+			try{
+				const result = mathjs.evaluate(input.expression.replace('**', '^'));
+				console.log(JSON.stringify(dummyOutput(input.save, result.toString(), Number(input.transitions.next)), null, 4));
+				return ;
+			}catch(e){
+				console.log(JSON.stringify(dummyOutput(input.save, 'NaN', Number(input.transitions.error)), null, 4));
+			}
+		}else{
+			console.log('Error invalid schema!');
+		}
+	}catch(err){
+		console.log(`Invalid Input JSON! ${err}`);
+	}
+}
+
+/* examples */
+const test_one = {
+	expression: '180/(99**2)',
+	save: 'result',
+	transitions: {
+		next: 1,
+		error: 2
+	}
+};
+
+const test_two = {
+	expression: '(str/2)',
+	save: 'result',
+	transitions: {
+		next: 101,
+		error: 102
+	}
+};
+
+const test_three = {
+	expression: '(10/2)',
+	save: 'result',
+	transitions: {
+		next: 25,
+		error: 50
+	}
+};
+console.log(`----- > Example 1 : ${test_one.expression} ----`);
+arithmeticChallenge(JSON.stringify(test_one));
+console.log(`----- > Example 2 : ${test_two.expression} ----`);
+arithmeticChallenge(JSON.stringify(test_two));
+console.log(`----- > Example 3 : ${test_three.expression} ----`);
+arithmeticChallenge(JSON.stringify(test_three));
 
