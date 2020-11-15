@@ -114,6 +114,75 @@ const test_four = {
 		age: 20
 	}
 }
+
+const test_five = {
+	expression: '(age <= 18)',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404,
+	},
+	context: {
+		age: 18
+	}
+};
+
+const test_six = {
+	expression: '(age && min)',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404,
+	},
+	context:{
+		age: true,
+		min: false
+	}
+};
+
+const test_seven = {
+	expression: '(age || min)',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404
+	},
+	context: {
+		age: false,
+		min: true
+	}
+};
+
+const test_eight = {
+	expression: '2 != 3',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404
+	},
+	context: {
+		
+	}
+};
+
+const test_nine = {
+	expression: '(age == min)',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404
+	},
+	context: {
+		age: 20,
+		min: 18
+	}
+};
+
 console.log(`------> Example 1 : ${test_one.expression}`);
 logicalChallenge(JSON.stringify(test_one));
 console.log(`------> Example 2 : ${test_two.expression}`);
@@ -122,3 +191,13 @@ console.log(`------> Example 3 : ${test_three.expression}`);
 logicalChallenge(JSON.stringify(test_three));
 console.log(`------> Example 4 : ${test_four.expression}`);
 logicalChallenge(JSON.stringify(test_four));
+console.log(`------> Example 5 : ${test_five.expression}`);
+logicalChallenge(JSON.stringify(test_five));
+console.log(`------> Example 6 : ${test_six.expression}`);
+logicalChallenge(JSON.stringify(test_six));
+console.log(`------> Example 7 : ${test_seven.expression}`);
+logicalChallenge(JSON.stringify(test_seven));
+console.log(`------> Example 8 : ${test_eight.expression}`);
+logicalChallenge(JSON.stringify(test_eight));
+console.log(`------> Example 9 : ${test_nine.expression}`);
+logicalChallenge(JSON.stringify(test_nine));
