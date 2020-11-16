@@ -166,7 +166,7 @@ const test_ten = {
 	},
 	context:{
 		age: 1,
-		min: 3
+		min: 2
 	}
 }
 
