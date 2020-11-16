@@ -7,6 +7,11 @@ How to:
 	3.- node logic.js || node arithmetic.js
 ```
 
+###### Arithmetic
+
+This version required **mathjs**. This library is a wellknown and oficial library for math operations and even _in our case_
+LL1, Shunting Yard and RPN Algorithms. For further information, please follow [MathJS](https://mathjs.org/).
+
 ###### There're two versions of logic
 The file **logic_old** was a pre-build schematic without complex operations such as ```((a && b) != (a < b))```
 
