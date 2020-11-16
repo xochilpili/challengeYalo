@@ -23,8 +23,11 @@ const challengeLogic = (inputString) => {
 			}
 		}
 		const tokens = parser(expression);
-		const result = rpn(tokens);
-		console.log(JSON.stringify(dummyOutput(input.save, result==='true' ? true : false, result==='true' ? input.transitions.isTrue : input.transitions.isFalse), null, 4));
+		let result = rpn(tokens);
+		result = result === 'true' ? true : result === '1' ? true : false;
+		console.log(JSON.stringify(input, null, 4));
+		console.log(`\t---- [ Output ] ----\t`);
+		console.log(JSON.stringify(dummyOutput(input.save, result,  result ? input.transitions.isTrue : input.transitions.isFalse), null, 4));
 	}catch(error){
 		console.log(`Invalid Input Format ${error}! `);
 	}
@@ -184,25 +187,25 @@ const test_eleven = {
 	}
 }
 
-console.log(`------> Example 1 : ${test_one.expression}`);
+console.log(`------> Example 1`);
 challengeLogic(JSON.stringify(test_one));
-console.log(`------> Example 2 : ${test_two.expression}`);
+console.log(`------> Example 2`);
 challengeLogic(JSON.stringify(test_two));
-console.log(`------> Example 3 : ${test_three.expression}`);
+console.log(`------> Example 3`);
 challengeLogic(JSON.stringify(test_three));
-console.log(`------> Example 4 : ${test_four.expression}`);
+console.log(`------> Example 4`);
 challengeLogic(JSON.stringify(test_four));
-console.log(`------> Example 5 : ${test_five.expression}`);
+console.log(`------> Example 5`);
 challengeLogic(JSON.stringify(test_five));
-console.log(`------> Example 6 : ${test_six.expression}`);
+console.log(`------> Example 6`);
 challengeLogic(JSON.stringify(test_six));
-console.log(`------> Example 7 : ${test_seven.expression}`);
+console.log(`------> Example 7`);
 challengeLogic(JSON.stringify(test_seven));
-console.log(`------> Example 8 : ${test_eight.expression}`);
+console.log(`------> Example 8`);
 challengeLogic(JSON.stringify(test_eight));
-console.log(`------> Example 9 : ${test_nine.expression}`);
+console.log(`------> Example 9`);
 challengeLogic(JSON.stringify(test_nine));
-console.log(`------> Example 10 : ${test_ten.expression}`);
+console.log(`------> Example 10`);
 challengeLogic(JSON.stringify(test_ten));
-console.log(`------> Example 11 : ${test_eleven.expression}`);
+console.log(`------> Example 11`);
 challengeLogic(JSON.stringify(test_eleven));
