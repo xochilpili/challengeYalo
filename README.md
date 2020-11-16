@@ -15,7 +15,7 @@ LL1, Shunting Yard and RPN Algorithms. For further information, please follow [M
 ###### There're two versions of logic
 The file **logic_old** was a pre-build schematic without complex operations such as ```((a && b) != (a < b))```
 
-The second one, **functional** based on requirements, it's **logic.js**
+The second one, **functional** based on requirements, it's **logic.js** i've implemented Shunting Yard Algorithm and RPN. Those are in lib/parser, which is a Recursive Decent Parser.
 
 
 ## Arithmetic.js
