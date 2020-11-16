@@ -34,5 +34,12 @@ The second one, **functional** based on requirements, it's **logic.js** i've imp
 	node logic.js // which contains several examples.
 ```
 
+## Unit-Tests
+```
+	Unit tests with mocha
+	npm run test
+	will test for utils, parser and rpn methods
+```
+
 xOCh et Am.
 	
