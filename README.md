@@ -9,7 +9,7 @@
 
 ###### Arithmetic
 
-This version required **mathjs**. This library is a wellknown and oficial library for math operations and even _in our case_
+This version requires **mathjs**. This library is a wellknown and oficial library for math operations and even _in our case_
 LL1, Shunting Yard and RPN Algorithms. For further information, please follow [MathJS](https://mathjs.org/).
 
 ###### There're two versions of logic
