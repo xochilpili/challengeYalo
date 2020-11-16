@@ -1,68 +1,41 @@
-#!/usr/bin/node
+const {parser, rpn} = require('./lib/parser');
+const { expression_replace } = require('./lib/utils');
 
 const args = process.argv.slice(2);
-
-const schema = {
-	expression: '',
-	save: '',
-	transitions: {
-		isTrue: 0,
-		isFalse: 0,
-		isError: 0,
-	},
-	context: {}
-};
-
-const transformInput2KeyValue = input => Object.keys(input).filter(key => input[key] instanceof Object).map(key => transformInput2KeyValue(input[key]).map(k=>`${key}.${k}`)).reduce((x,y) => x.concat(y), Object.keys(input));
-
-const dummySchemaValidator = (input, schema) => JSON.stringify(input) === JSON.stringify(schema);
-const isNumber = (n) => (Number(n) === n);
-const evaluate = {
-	'>':  (x, y) => x > y,
-	'<':  (x, y) => x < y,
-	'>=': (x, y) => x >= y,
-	'<=': (x, y) => x <= y,
-	'==': (x, y) => x == y,
-	'!=': (x, y) => x != y,
-	'||': (x, y) => x || y,
-	'&&': (x, y) => x && y
-};
 
 const dummyOutput = (prop, value, next) => ({
 	[prop]: value,
 	transition: next,
 });
 
-if(args.length > 0){
-	logicalChallenge(args);
-}
-
-function logicalChallenge(inputString){
+const challengeLogic = (inputString) => {
+	
 	try{
-
 		const input = JSON.parse(inputString);
-		const regex = new RegExp(/\>\=|\<\=|\>|\<|\=\=|\!\=|\|\||\&\&/);
-		if(regex.test(input.expression)){
-			const operator = input.expression.match(regex)[0];
-			const [a, b] = input.expression.replace(/\(|\)|\s/g,'').split(operator);
-			
-			const x = isNumber(+a) ? Number(+a) : Number(input.context[a.trim()]);
-			const y = isNumber(+b) ? Number(+b) : Number(input.context[b.trim()]);
-			let result = false;
-			if(isNumber(x) && isNumber(y)){
-				result = evaluate[operator](x, y);
-				console.log(JSON.stringify(dummyOutput(input.save, result ? true : false, result ? input.transitions.isTrue : input.transitions.isFalse), null, 4));
-			}else{
-				result = `Uncaught ReferenceError: Neither '${a}' or '${b}' are not defined`;
-				console.log(JSON.stringify(dummyOutput(input.save, result, input.transitions.isError), null, 4));
+		let expression = input.expression;
+		if(/\w+[^0-9]\b/.test(expression)){
+			const vars  = expression.match(/\w+[^0-9]\b/gm).filter((v, i, a) => a.indexOf(v) === i);
+			try {
+				expression = expression_replace(expression, vars, input.context);
+			} catch(er) {
+				console.log(JSON.stringify(dummyOutput(input.save, er, input.transitions.isError), null, 4));
+				return ;
 			}
-		}else{
-			console.log(JSON.stringify(dummyOutput(input.save, 'Uncaught ReferenceError: Invalid Input Schema', input.transitions.isError), null, 4));
 		}
+		const tokens = parser(expression);
+		const result = rpn(tokens);
+		console.log(JSON.stringify(dummyOutput(input.save, result==='true' ? true : false, result==='true' ? input.transitions.isTrue : input.transitions.isFalse), null, 4));
 	}catch(error){
-		console.log(`Error: Invalid JSON input : ${error}`);
+		console.log(`Invalid Input Format ${error}! `);
 	}
 }
+
+
+if(args.length > 0){
+	challengeLogic(args);
+}
+
+/* Examples */
 
 const test_one = {
 	expression: '(amount > min)',
@@ -183,21 +156,53 @@ const test_nine = {
 	}
 };
 
+const test_ten = {
+	expression: '((age == min) && (2 < 4))',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404
+	},
+	context:{
+		age: 1,
+		min: 3
+	}
+}
+
+const test_eleven = {
+	expression: '((age > min) && (1 == 1))',
+	save: 'result',
+	transitions: {
+		isTrue: 101,
+		isFalse: 102,
+		isError: 404
+	},
+	context:{
+		age: 20,
+		min: 18
+	}
+}
+
 console.log(`------> Example 1 : ${test_one.expression}`);
-logicalChallenge(JSON.stringify(test_one));
+challengeLogic(JSON.stringify(test_one));
 console.log(`------> Example 2 : ${test_two.expression}`);
-logicalChallenge(JSON.stringify(test_two));
+challengeLogic(JSON.stringify(test_two));
 console.log(`------> Example 3 : ${test_three.expression}`);
-logicalChallenge(JSON.stringify(test_three));
+challengeLogic(JSON.stringify(test_three));
 console.log(`------> Example 4 : ${test_four.expression}`);
-logicalChallenge(JSON.stringify(test_four));
+challengeLogic(JSON.stringify(test_four));
 console.log(`------> Example 5 : ${test_five.expression}`);
-logicalChallenge(JSON.stringify(test_five));
+challengeLogic(JSON.stringify(test_five));
 console.log(`------> Example 6 : ${test_six.expression}`);
-logicalChallenge(JSON.stringify(test_six));
+challengeLogic(JSON.stringify(test_six));
 console.log(`------> Example 7 : ${test_seven.expression}`);
-logicalChallenge(JSON.stringify(test_seven));
+challengeLogic(JSON.stringify(test_seven));
 console.log(`------> Example 8 : ${test_eight.expression}`);
-logicalChallenge(JSON.stringify(test_eight));
+challengeLogic(JSON.stringify(test_eight));
 console.log(`------> Example 9 : ${test_nine.expression}`);
-logicalChallenge(JSON.stringify(test_nine));
+challengeLogic(JSON.stringify(test_nine));
+console.log(`------> Example 10 : ${test_ten.expression}`);
+challengeLogic(JSON.stringify(test_ten));
+console.log(`------> Example 11 : ${test_eleven.expression}`);
+challengeLogic(JSON.stringify(test_eleven));
