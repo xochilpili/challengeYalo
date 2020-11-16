@@ -18,7 +18,7 @@ const transformInput2KeyValue = input => Object.keys(input)
 	.filter(key => input[key] instanceof Object)
 	.map(key => transformInput2KeyValue(input[key])
 	.map(k=>`${key}.${k}`))
-	.reduce((x,y) => x.<concat(y), Object.keys(input));
+	.reduce((x,y) => x.concat(y), Object.keys(input));
 
 const dummySchemaValidator = (input, schema) => JSON.stringify(input) === JSON.stringify(schema);
 
