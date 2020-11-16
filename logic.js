@@ -18,6 +18,8 @@ const challengeLogic = (inputString) => {
 			try {
 				expression = expression_replace(expression, vars, input.context);
 			} catch(er) {
+				console.log(JSON.stringify(input, null, 4));
+				console.log(`\t---- [ Output ] ----\t`);
 				console.log(JSON.stringify(dummyOutput(input.save, er, input.transitions.isError), null, 4));
 				return ;
 			}
