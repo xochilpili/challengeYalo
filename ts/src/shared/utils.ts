@@ -1,7 +1,7 @@
 import { OutputString } from './../types/input-string';
 export const isNumeric = (n) => !isNaN(n) && isFinite(n);
 
-export const expressionReplace = (str: string, find: any[], replace: any[]) => {
+export const expressionReplace = (str: string, find: any[], replace: any) => {
 	// tslint:disable-next-line:prefer-for-of
 	for(let i=0; i < find.length; i++){
 		const regex = new RegExp(find[i], 'g');

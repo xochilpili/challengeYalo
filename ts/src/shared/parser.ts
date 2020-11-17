@@ -79,8 +79,14 @@ const evaluate = {
 	'<' : (x, y) => (x < y),
 	'>=': (x, y) => (x >= y),
 	'<=': (x, y) => (x <= y),
-	'==': (x, y) => (x === y),
-	'!=': (x, y) => (x !== y)
+	'==': (x, y) => {
+		// tslint:disable-next-line:triple-equals
+		return x == y;
+	},
+	'!=': (x, y) => {
+		// tslint:disable-next-line:triple-equals
+		return x != y;
+	}
 };
 
 

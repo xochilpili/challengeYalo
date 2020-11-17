@@ -15,10 +15,17 @@ export function challengeLogic(inputString: any): OutputString{
 			}
 			const tokens = parser(expression);
 			let result = rpn(tokens);
-			result = result === 'true' ? true : result === '1' ? true : false;
+			result = result === 'true' || result === true ? true : result === '1' ? true : false;
 			return dummyOutput(input.save, result,  result ? input.transitions.isTrue : input.transitions.isFalse);
 		}
 	}catch(error){
 		console.log(`Invalid Input Format ${error}! `);
 	}
 }
+
+
+const esx = '((1 > 2) != false)';
+const tok = parser(esx);
+console.log(tok);
+const res = rpn(tok);
+console.log('here', res);

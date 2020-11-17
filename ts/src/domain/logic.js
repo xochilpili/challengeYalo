@@ -17,7 +17,7 @@ function challengeLogic(inputString) {
             }
             const tokens = parser_1.parser(expression);
             let result = parser_1.rpn(tokens);
-            result = result === 'true' ? true : result === '1' ? true : false;
+            result = result === 'true' || result === true ? true : result === '1' ? true : false;
             return utils_1.dummyOutput(input.save, result, result ? input.transitions.isTrue : input.transitions.isFalse);
         }
     }
@@ -26,4 +26,9 @@ function challengeLogic(inputString) {
     }
 }
 exports.challengeLogic = challengeLogic;
+const esx = '((1 > 2) != false)';
+const tok = parser_1.parser(esx);
+console.log(tok);
+const res = parser_1.rpn(tok);
+console.log('here', res);
 //# sourceMappingURL=logic.js.map
