@@ -2,9 +2,22 @@
 
 ###### How to: 
 ```
+	###### for NodeJS
+
 	1.- git clone https://github.com/xochilpili/challengeYalo
 	2.- npm i
 	3.- node logic.js || node arithmetic.js
+
+	###### for TypeScript
+
+	1.- git clone https://github.com/xochilpili/challengeYalo
+	2.- npm i
+	3.- cd ts/
+	4.- npm run example:logic || npm run example:arithmetic
+	
+	5.- see package.json for further pre-defined scripts
+		> npm run clearjs // to clear all compiled files
+		> npm run build // to build
 ```
 
 ###### Arithmetic
